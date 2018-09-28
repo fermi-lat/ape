@@ -6,34 +6,34 @@ project(ape
   )
 
 add_library(ape STATIC
-  heacore/ape/src/ape_binary.c
-  heacore/ape/src/ape_error.c
-  heacore/ape/src/ape_io.c
-  heacore/ape/src/ape_list.c
-  heacore/ape/src/ape_msg.c
-  heacore/ape/src/ape_par.c
-  heacore/ape/src/ape_par_group.c
-  heacore/ape/src/ape_session.c
-  heacore/ape/src/ape_test.c
-  heacore/ape/src/ape_trad.c
-  heacore/ape/src/ape_util.c
-  heacore/ape/src/pil.c
-  heacore/ape/src/pil_error.c
+  src/ape_binary.c
+  src/ape_error.c
+  src/ape_io.c
+  src/ape_list.c
+  src/ape_msg.c
+  src/ape_par.c
+  src/ape_par_group.c
+  src/ape_session.c
+  src/ape_test.c
+  src/ape_trad.c
+  src/ape_util.c
+  src/pil.c
+  src/pil_error.c
 )
 add_library(ST::ape ALIAS ape)
 target_include_directories(ape
   PUBLIC
     $<INSTALL_INTERFACE:include>
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/heacore/ape/include>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
 )
 
-add_executable(pcheck heacore/ape/src/pcheck/pcheck.c)
-add_executable(pget heacore/ape/src/pget/pget.c)
-add_executable(plist heacore/ape/src/plist/plist.c)
-add_executable(pquery heacore/ape/src/pquery/pquery.c)
-add_executable(pquery2 heacore/ape/src/pquery2/pquery2.c)
-add_executable(pset heacore/ape/src/pset/pset.c)
-add_executable(punlearn heacore/ape/src/punlearn/punlearn.c)
+add_executable(pcheck src/pcheck/pcheck.c)
+add_executable(pget src/pget/pget.c)
+add_executable(plist src/plist/plist.c)
+add_executable(pquery src/pquery/pquery.c)
+add_executable(pquery2 src/pquery2/pquery2.c)
+add_executable(pset src/pset/pset.c)
+add_executable(punlearn src/punlearn/punlearn.c)
 target_link_libraries(pcheck ST::ape)
 target_link_libraries(pget ST::ape)
 target_link_libraries(plist ST::ape)
@@ -47,7 +47,7 @@ target_link_libraries(punlearn ST::ape)
 include(GNUInstallDirs)
 set(INSTALL_CONFIGDIR ${CMAKE_INSTALL_LIBDIR}/cmake/ape)
 
-install(DIRECTORY heacore/ape/include DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+install(DIRECTORY include DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
 install(TARGETS ape pcheck pget plist pquery pquery2 pset punlearn
   RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
