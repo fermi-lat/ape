@@ -3,7 +3,7 @@ VERSION=
 
 DEPENDENCIES=
 
-CONFIGURE_CMD='cd $h_dir; ./configure --build=$build --with-heatop=$prefix --enable-collapse=$h_collapse --enable-shared=$h_shared --enable-symbols=$h_symbols --enable-strip=$h_strip --with-copt="$h_copt" --with-cxxopt="$h_cxxopt" --with-fopt="$h_fopt" --with-components="$h_heacore_components" --enable-readline=$force_readline_build --enable-hera=$h_hera_build --x-libraries=$x_libraries --x-includes=$x_includes --enable-fv-standalone=$fv_build --enable-ldopt="$h_ldopt" --enable-mac_32bit=$h_mac_32bit_build'
+CONFIGURE_CMD='cd $h_dir; ./configure'
 
 #==============================================================================
 # APE(PIL) / PILPERL
