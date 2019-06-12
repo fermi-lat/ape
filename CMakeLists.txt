@@ -1,11 +1,23 @@
 cmake_minimum_required(VERSION 3.11)
 
-project(ape
-  VERSION 0.0.0
-  LANGUAGES C
-  )
+project(   ape
+           VERSION     2.9
+           LANGUAGES   C
+)
 
-add_library(ape STATIC
+##########################################
+# Specify needed external dependencies
+##########################################
+set(CMAKE_MODULE_PATH
+  ${CMAKE_MODULE_PATH}
+  "${CMAKE_SOURCE_DIR}/cmake")
+
+find_package(Readline   REQUIRED)
+
+##########################################
+# Declare targets
+##########################################
+add_library(ape   SHARED
   src/ape_binary.c
   src/ape_error.c
   src/ape_io.c
@@ -20,32 +32,43 @@ add_library(ape STATIC
   src/pil.c
   src/pil_error.c
 )
-add_library(ST::ape ALIAS ape)
+
+add_library(ST::ape   ALIAS   ape)
+
+add_executable(pcheck     src/pcheck/pcheck.c)
+add_executable(pget       src/pget/pget.c)
+add_executable(plist      src/plist/plist.c)
+add_executable(pquery     src/pquery/pquery.c)
+add_executable(pquery2    src/pquery2/pquery2.c)
+add_executable(pset       src/pset/pset.c)
+add_executable(punlearn   src/punlearn/punlearn.c)
+
+##########################################
+# Specify target properties
+##########################################
 target_include_directories(ape
   PUBLIC
     $<INSTALL_INTERFACE:include>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
 )
 
-add_executable(pcheck src/pcheck/pcheck.c)
-add_executable(pget src/pget/pget.c)
-add_executable(plist src/plist/plist.c)
-add_executable(pquery src/pquery/pquery.c)
-add_executable(pquery2 src/pquery2/pquery2.c)
-add_executable(pset src/pset/pset.c)
-add_executable(punlearn src/punlearn/punlearn.c)
-target_link_libraries(pcheck ST::ape)
-target_link_libraries(pget ST::ape)
-target_link_libraries(plist ST::ape)
-target_link_libraries(pquery ST::ape)
-target_link_libraries(pquery2 ST::ape)
-target_link_libraries(pset ST::ape)
-target_link_libraries(punlearn ST::ape)
+target_link_libraries(ape   PRIVATE   Readline::Readline)
+
+target_link_libraries(pcheck     ST::ape)
+target_link_libraries(pget       ST::ape)
+target_link_libraries(plist      ST::ape)
+target_link_libraries(pquery     ST::ape)
+target_link_libraries(pquery2    ST::ape)
+target_link_libraries(pset       ST::ape)
+target_link_libraries(punlearn   ST::ape)
 
 
+##########################################
+# Specify Installation destinations
+##########################################
 
 include(GNUInstallDirs)
-set(INSTALL_CONFIGDIR ${CMAKE_INSTALL_LIBDIR}/cmake/ape)
+set(INSTALL_CONFIGDIR ${CMAKE_INSTALL_DATAROOTDIR}/cmake/ape)
 
 install(DIRECTORY include/ape DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
@@ -85,7 +108,7 @@ install(
   FILES
     ${CMAKE_CURRENT_BINARY_DIR}/apeConfig.cmake
     ${CMAKE_CURRENT_BINARY_DIR}/apeConfigVersion.cmake
-  DESTINATION ${INSTALL_CONFIGDIR}
+    DESTINATION ${INSTALL_CONFIGDIR}
 )
 
 export(EXPORT apeTargets
