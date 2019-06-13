@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.11)
+cmake_minimum_required(VERSION 3.12)
 
 project(   ape
            VERSION     2.9
@@ -8,16 +8,15 @@ project(   ape
 ##########################################
 # Specify needed external dependencies
 ##########################################
-set(CMAKE_MODULE_PATH
-  ${CMAKE_MODULE_PATH}
-  "${CMAKE_SOURCE_DIR}/cmake")
 
-find_package(Readline   REQUIRED)
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
+find_package(Readline REQUIRED MODULE)
+list(REMOVE_AT CMAKE_MODULE_PATH -1)
 
 ##########################################
 # Declare targets
 ##########################################
-add_library(ape   SHARED
+add_library(ape SHARED
   src/ape_binary.c
   src/ape_error.c
   src/ape_io.c
@@ -68,25 +67,36 @@ target_link_libraries(punlearn   ST::ape)
 ##########################################
 
 include(GNUInstallDirs)
-set(INSTALL_CONFIGDIR ${CMAKE_INSTALL_DATAROOTDIR}/cmake/ape)
+set(CONFIG_INSTALLDIR ${CMAKE_INSTALL_DATAROOTDIR}/cmake/ape)
 
 install(DIRECTORY include/ape DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+install(FILES
+          include/pil.h
+          include/pil_error.h
+  DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
 install(TARGETS ape
-  EXPORT apeTargets
-  DESTINATION ${CMAKE_INSTALL_LIBDIR}
+  EXPORT     apeTargets
+  LIBRARY    DESTINATION ${CMAKE_INSTALL_LIBDIR}
+  INCLUDES   DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
   )
 
 install(EXPORT apeTargets
   NAMESPACE    ST::
-  DESTINATION  ${INSTALL_CONFIGDIR}
+  DESTINATION  ${CONFIG_INSTALLDIR}
   )
 
-install(TARGETS pcheck pget plist pquery pquery2 pset punlearn
+install(TARGETS
+          pcheck
+          pget
+          plist
+          pquery
+          pquery2
+          pset
+          punlearn
   RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
   ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-  INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
   )
 
 
@@ -94,27 +104,26 @@ install(TARGETS pcheck pget plist pquery pquery2 pset punlearn
 include(CMakePackageConfigHelpers)
 write_basic_package_version_file(
   ${CMAKE_CURRENT_BINARY_DIR}/apeConfigVersion.cmake
-  VERSION ${PROJECT_VERSION}
-  COMPATIBILITY AnyNewerVersion
-)
+  VERSION         ${PROJECT_VERSION}
+  COMPATIBILITY   AnyNewerVersion
+  )
 
 configure_package_config_file(
   ${CMAKE_CURRENT_LIST_DIR}/cmake/apeConfig.cmake.in
   ${CMAKE_CURRENT_BINARY_DIR}/apeConfig.cmake
-  INSTALL_DESTINATION ${INSTALL_CONFIGDIR}
-)
+  INSTALL_DESTINATION ${CONFIG_INSTALLDIR}
+  )
 
-install(
-  FILES
-    ${CMAKE_CURRENT_BINARY_DIR}/apeConfig.cmake
-    ${CMAKE_CURRENT_BINARY_DIR}/apeConfigVersion.cmake
-    DESTINATION ${INSTALL_CONFIGDIR}
-)
+install(FILES
+  ${CMAKE_CURRENT_BINARY_DIR}/apeConfig.cmake
+  ${CMAKE_CURRENT_BINARY_DIR}/apeConfigVersion.cmake
+  DESTINATION ${CONFIG_INSTALLDIR}
+  )
 
 export(EXPORT apeTargets
-  FILE ${CMAKE_CURRENT_BINARY_DIR}/apeTargets.cmake
-  NAMESPACE ST::
-)
+  FILE        ${CMAKE_CURRENT_BINARY_DIR}/apeTargets.cmake
+  NAMESPACE   ST::
+  )
 
 #Register package in user's package registry
 export(PACKAGE ape)
