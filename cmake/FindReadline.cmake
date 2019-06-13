@@ -31,15 +31,24 @@ find_library(READLINE_LIBRARY
                   lib64
   )
 
+find_library(NCURSES_LIBRARY
+  NAMES ncurses
+  HINTS  ${CMAKE_INSTALL_PREFIX}
+  PATH_SUFFIXES   lib
+                  lib64
+  )
+
 ###############################################################################
 # Bookkeeping and warning if anything not found
-mark_as_advanced(READLINE_FOUND Readline_INCLUDE_DIR READLINE_LIBRARY)
+mark_as_advanced(READLINE_FOUND Readline_INCLUDE_DIR READLINE_LIBRARY
+  NCURSES_LIBRARY)
 
 include(FindPackageHandleStandardArgs)
 
 find_package_handle_standard_args(Readline
    REQUIRED_VARS   Readline_INCLUDE_DIR
                    READLINE_LIBRARY
+                   NCURSES_LIBRARY
 )
 
 
@@ -62,6 +71,7 @@ if(READLINE_FOUND AND NOT TARGET Readline::Readline)
   )
   target_link_libraries(Readline::Readline INTERFACE
     "${READLINE_LIBRARY}"
+    "${NCURSES_LIBRARY}"
   )
 
 endif()
