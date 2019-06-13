@@ -63,6 +63,5 @@ if(READLINE_FOUND AND NOT TARGET Readline::Readline)
   target_link_libraries(Readline::Readline INTERFACE
     "${READLINE_LIBRARY}"
   )
-  target_compile_definitions(Readline::Readline INTERFACE USE_READLINE)
 
 endif()

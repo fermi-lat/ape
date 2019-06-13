@@ -49,9 +49,17 @@ target_include_directories(ape
   PUBLIC
     $<INSTALL_INTERFACE:include>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-)
+  )
 
-target_link_libraries(ape   PRIVATE   Readline::Readline)
+target_link_libraries(ape
+  PRIVATE
+    Readline::Readline
+  )
+
+target_compile_definitions(ape
+  PRIVATE
+    USE_READLINE
+  )
 
 target_link_libraries(pcheck     ST::ape)
 target_link_libraries(pget       ST::ape)
