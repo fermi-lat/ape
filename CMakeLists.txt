@@ -45,21 +45,26 @@ add_executable(punlearn   src/punlearn/punlearn.c)
 ##########################################
 # Specify target properties
 ##########################################
+set_target_properties(ape PROPERTIES
+  OUTPUT_NAME
+    "ape_${PROJECT_VERSION}"
+)
+
 target_include_directories(ape
   PUBLIC
     $<INSTALL_INTERFACE:include>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-  )
+)
 
 target_link_libraries(ape
   PRIVATE
     Readline::Readline
-  )
+)
 
 target_compile_definitions(ape
   PRIVATE
     USE_READLINE
-  )
+)
 
 target_link_libraries(pcheck     ST::ape)
 target_link_libraries(pget       ST::ape)
