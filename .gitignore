@@ -55,3 +55,6 @@ dkms.conf
 build/
 _build/
 bld/
+
+# build_artifacts
+compile_commands.json
