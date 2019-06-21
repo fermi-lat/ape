@@ -7,7 +7,7 @@ project(ape VERSION 2.9 LANGUAGES C)
 # ##############################################################################
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
-find_package(Readline REQUIRED MODULE)
+find_package(READLINE REQUIRED MODULE)
 list(REMOVE_AT CMAKE_MODULE_PATH -1)
 
 # ##############################################################################
@@ -48,7 +48,7 @@ target_include_directories(
   PUBLIC $<INSTALL_INTERFACE:include>
          $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>)
 
-target_link_libraries(ape PRIVATE Readline::Readline)
+target_link_libraries(ape PRIVATE READLINE::READLINE)
 
 target_compile_definitions(ape PRIVATE USE_READLINE)
 
