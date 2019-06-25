@@ -65,7 +65,7 @@ target_link_libraries(punlearn ST::ape)
 # ##############################################################################
 
 include(GNUInstallDirs)
-set(CONFIG_INSTALLDIR ${CMAKE_INSTALL_LIBDIR}/cmake/ape)
+set(CONFIG_INSTALLDIR lib/cmake/ape)
 
 install(DIRECTORY include/ape DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
@@ -82,8 +82,8 @@ install(TARGETS ape
                 punlearn
         EXPORT apeTargets
         RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        LIBRARY DESTINATION lib
+        ARCHIVE DESTINATION lib
         INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
 install(EXPORT apeTargets NAMESPACE ST:: DESTINATION ${CONFIG_INSTALLDIR})
