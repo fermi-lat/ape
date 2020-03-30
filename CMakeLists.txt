@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.11)
 
-project(ape VERSION 2.9 LANGUAGES C)
+project(ape VERSION 2.9.1 LANGUAGES C)
 
 # ##############################################################################
 # Specify needed external dependencies
