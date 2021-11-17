@@ -50,3 +50,11 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+# build directoris
+build/
+_build/
+bld/
+
+# build_artifacts
+compile_commands.json
