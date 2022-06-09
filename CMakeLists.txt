@@ -13,7 +13,7 @@ list(REMOVE_AT CMAKE_MODULE_PATH -1)
 # ##############################################################################
 # Declare targets
 # ##############################################################################
-add_library(ape SHARED
+add_library(ape
             src/ape_binary.c
             src/ape_error.c
             src/ape_io.c
