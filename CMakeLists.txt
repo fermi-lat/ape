@@ -7,7 +7,7 @@ project(ape VERSION 3 LANGUAGES C)
 # ##############################################################################
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
-find_package(READLINE REQUIRED MODULE)
+# find_package(READLINE REQUIRED MODULE)
 list(REMOVE_AT CMAKE_MODULE_PATH -1)
 
 # ##############################################################################
@@ -48,9 +48,9 @@ target_include_directories(
   PUBLIC $<INSTALL_INTERFACE:include>
          $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>)
 
-target_link_libraries(ape PRIVATE READLINE::READLINE)
+# target_link_libraries(ape PRIVATE READLINE::READLINE)
 
-target_compile_definitions(ape PRIVATE USE_READLINE)
+# target_compile_definitions(ape PRIVATE USE_READLINE)
 
 target_link_libraries(pcheck ST::ape)
 target_link_libraries(pget ST::ape)
