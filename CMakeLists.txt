@@ -30,6 +30,8 @@ add_library(ape SHARED
 
 add_library(ST::ape ALIAS ape)
 
+set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
+
 add_executable(pcheck src/pcheck/pcheck.c)
 add_executable(pget src/pget/pget.c)
 add_executable(plist src/plist/plist.c)
