@@ -173,6 +173,15 @@ ape has no par files of its own.
 
 None.
 
+### Environment variables
+
+| Variable | Read in | Effect |
+|----------|---------|--------|
+| `PFILES` | `ape_io.c` (once, then cached) | Local and system par-file search path; see [parameter-files.md](parameter-files.md#pfiles-where-par-files-are-found). Its activation value is described under "Runtime environment" in ScienceTools' `docs/architecture/README.md`. |
+| `HEADASNOQUERY` | `ape_util_interpret_env` | Any value disables all prompting. |
+| `APEDEBUG` | `ape_util_interpret_env` | Any value turns on debug messages. |
+| any `VAR` | `ape_util_expand_env_var`, called by `get_field` in `ape_par.c` | `${VAR}`-style references in par-file fields are expanded when read, unless the field is single-quoted. |
+
 ### File formats
 
 IRAF/HEASoft parameter files (`.par`), described in
@@ -210,7 +219,12 @@ made into a standalone CMake project (commit `cb5615c`, "Version 3"):
   the `ape` source list, and every module has an `ape_<module>_test()`
   function. The driver, `src/test/ape_test_main.c`, is **not built** by
   CMake, and nothing is registered with CTest. ape has no automated tests
-  in the Fermitools build.
+  in the Fermitools build: the project harness `recipe/tests/ST-unit-test`
+  (see "Testing" in ScienceTools' `docs/architecture/README.md`) never
+  lists an ape program, and the only reference output
+  (`src/test/unix-ref/ape_test-log`) is for the manual test below. ape is
+  exercised only indirectly, through the par-file handling of the tools
+  and test programs that ST-unit-test runs.
 - To run the HEASARC test by hand, build `src/test/ape_test_main.c` against
   `libape_3`, then follow `src/test/README.test`. In short: `PFILES` must be
   unset; copy `src/test/unix-ref/ape_test.par` to `ape_test_unix.par`,
