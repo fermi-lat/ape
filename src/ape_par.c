@@ -3261,7 +3261,7 @@ void ape_par_test(void) {
           char msg[128] = "";
           char eff_mode[APE_PAR_MODE_CODE_LEN] = "";
           status = ape_par_get_eff_mode(par, mode_par[jj], eff_mode);
-          sprintf(msg, "ape_par_get_eff_mode(\"%s\") for mode \"%s\"", par_string[ii], mode_par[jj]);
+          snprintf(msg, sizeof(msg), "ape_par_get_eff_mode(\"%s\") for mode \"%s\"", par_string[ii], mode_par[jj]);
           ape_test_cmp_string(msg, eff_mode, eff_mode_expected[ii][jj], status, eOK);
         }
         status = ape_par_flag_cmd_line(par);
@@ -3270,7 +3270,7 @@ void ape_par_test(void) {
             char msg[128] = "";
             char eff_mode[APE_PAR_MODE_CODE_LEN] = "";
             status = ape_par_get_eff_mode(par, mode_par[jj], eff_mode);
-            sprintf(msg, "after ape_par_flag_cmd_line, ape_par_get_eff_mode(\"%s\") for mode \"%s\"", par_string[ii], mode_par[jj]);
+            snprintf(msg, sizeof(msg), "after ape_par_flag_cmd_line, ape_par_get_eff_mode(\"%s\") for mode \"%s\"", par_string[ii], mode_par[jj]);
             ape_test_cmp_string(msg, eff_mode, eff_mode_expected_after_set[ii][jj], status, eOK);
           }
         } else {

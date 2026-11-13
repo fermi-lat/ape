@@ -388,7 +388,7 @@ int ape_binary_pquery2(int argc, char ** argv) {
   /* Issue usage message and return if basic conditions were not met. */
   if (eOK != status) {
     char usage_string [1024] = "";
-    sprintf(usage_string,"%s [ -f ] tool-or-par-file-name parameter-name [ command line arguments ]",s_pquery_name);
+    snprintf(usage_string, sizeof(usage_string), "%s [ -f ] tool-or-par-file-name parameter-name [ command line arguments ]",s_pquery_name);
     usage(usage_string);
     return status;
   }

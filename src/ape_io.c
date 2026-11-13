@@ -1150,9 +1150,9 @@ static char * create_tmp_file_name(const char * file_name) {
   char pid[64] = "";
   if (0 != file_name) {
 #ifdef WIN32
-    sprintf(pid, "%lu", GetCurrentProcessId());
+    snprintf(pid, sizeof(pid), "%lu", GetCurrentProcessId());
 #else
-    sprintf(pid, "%lu", (unsigned long) getpid());
+    snprintf(pid, sizeof(pid), "%lu", (unsigned long) getpid());
 
 /* On Cygwin, gethostname tries to go out to the network and hangs if firewall installed. */
 #ifndef __CYGWIN__
@@ -1163,7 +1163,7 @@ static char * create_tmp_file_name(const char * file_name) {
     /* Allocate space for base name + host name + process id + 2 dashes + terminating 0. */
     tmp_file_name = (char *) calloc(strlen(file_name) + strlen(host_name) + strlen(pid) + 3, sizeof(char));
     if (0 != tmp_file_name)
-      sprintf(tmp_file_name, "%s-%s-%s", file_name, host_name, pid);
+      snprintf(tmp_file_name, sizeof(tmp_file_name), "%s-%s-%s", file_name, host_name, pid);
   }
   return tmp_file_name;
 }

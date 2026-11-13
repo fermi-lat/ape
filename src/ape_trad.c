@@ -507,7 +507,7 @@ void ape_trad_test(void) {
               char * value = 0;
               char buf[128];
               status = ape_par_get_field(par, eValue, &value);
-              sprintf(buf, "after ape_trad_init(8 args) parameter %s", name[idx]);
+              snprintf(buf, sizeof(buf),  "after ape_trad_init(8 args) parameter %s", name[idx]);
               ape_test_cmp_string(buf, value, expected[idx], status, eOK);
               free(value); value = 0;
             }
@@ -535,13 +535,13 @@ void ape_trad_test(void) {
           ape_test_cmp_double(msg, value, 0., status, eUndefinedValue);
 
           value = 1.23456789012345e200;
-          sprintf(msg, "ape_trad_set_double(\"dh\", %1.15g)", value);
+          snprintf(msg, sizeof(msg), "ape_trad_set_double(\"dh\", %1.15g)", value);
           status = ape_trad_set_double("dh", value);
           if (eOK == status) {
             char * string_value = 0;
             char expected_string_value[64] = "";
             double expected_value = value;
-            sprintf(expected_string_value, "%1.15g", expected_value);
+            snprintf(expected_string_value, sizeof(expected_string_value), "%1.15g", expected_value);
             status = ape_trad_get_string("dh", &string_value);
             ape_test_cmp_string("ape_trad_get_string(\"dh\")", string_value, expected_string_value, status, eOK);
             free(string_value); string_value = 0;
